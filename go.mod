@@ -3,6 +3,7 @@ module github.com/pronuu/lincoln
 go 1.14
 
 require (
+	github.com/go-kit/kit v0.10.0
 	github.com/go-redis/redis v6.15.8+incompatible // indirect
 	github.com/jinzhu/gorm v1.9.14
 	github.com/soheilhy/cmux v0.1.4
