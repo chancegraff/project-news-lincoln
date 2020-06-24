@@ -2,8 +2,9 @@ package models
 
 import (
 	"fmt"
-	"strings"
 	"time"
+
+	"github.com/pronuu/lincoln/internal/utils"
 )
 
 // Article is a representation of an article in the database
@@ -40,9 +41,7 @@ func (a *Article) String() string {
 		a.stringCreatedAt(),
 		a.stringUpdatedAt(),
 	)
-	result = strings.Replace(result, "\t", "", -1)
-	result = strings.Replace(result, "\n", "", -1)
-	return result
+	return utils.TrimWhitespace(result)
 }
 
 func (a *Article) stringID() string {
