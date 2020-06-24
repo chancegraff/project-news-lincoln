@@ -5,11 +5,10 @@ import (
 
 	"github.com/pronuu/lincoln/internal/errors"
 	"github.com/pronuu/lincoln/internal/models"
-	"github.com/pronuu/lincoln/internal/utils"
 )
 
 // Enumerate ...
-func (s *services) Enumerate(ctx context.Context, articles []*models.Article) (output []*models.Article, err error) {
+func (s *services) Enumerate(ctx context.Context, articles models.ArticleArray, offset, limit int) (output models.ArticleArray, err error) {
 	defer func() {
 		if r := recover(); r != nil {
 			err = errors.NilPointer()
@@ -17,24 +16,21 @@ func (s *services) Enumerate(ctx context.Context, articles []*models.Article) (o
 			return
 		}
 	}()
-	if len(articles) == 0 {
-		err = errors.MissingKey()
-		return
+	db := s.Store.Database.Model(models.Article{})
+	if len(articles) > 0 {
+		articleIDs := make([]uint, 0)
+		for _, article := range articles {
+			articleIDs = append(articleIDs, article.ID)
+		}
+		db = db.Where("id IN (?)", articleIDs)
 	}
-	limit, ok := utils.GetArticlesLimit(ctx)
-	if !ok {
+	if limit == 0 {
 		limit = 20
 	}
-	offset, ok := utils.GetArticlesOffset(ctx)
-	if !ok {
-		offset = 0
-	}
-	rows, err := s.Store.Database.Model(models.Article{}).Where(articles).Order("published_at desc").Limit(limit).Offset(offset).Rows()
+	rows, err := db.Limit(limit).Offset(offset).Order("published_at desc").Rows()
 	if err != nil {
-		output = nil
 		return
 	}
-	output = make([]*models.Article, len(articles))
 	err = s.Store.Database.ScanRows(rows, output)
 	if err != nil {
 		output = nil

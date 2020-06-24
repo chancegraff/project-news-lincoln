@@ -2,10 +2,24 @@ package models
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
 	"time"
 
 	"github.com/pronuu/lincoln/internal/utils"
 )
+
+// ArticleArray ...
+type ArticleArray []*Article
+
+// String ...
+func (articleArray *ArticleArray) String() string {
+	articleIDs := make([]string, 0)
+	for _, article := range *articleArray {
+		articleIDs = append(articleIDs, fmt.Sprintf("Article{ID: %s}", strconv.Itoa(int(article.ID))))
+	}
+	return fmt.Sprintf("[]Article{%s}", strings.Join(articleIDs, ","))
+}
 
 // Article is a representation of an article in the database
 type Article struct {

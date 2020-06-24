@@ -10,7 +10,7 @@ import (
 // Services implements the collector interface
 type Services interface {
 	Create(ctx context.Context, article *models.Article) (*models.Article, error)
-	Enumerate(ctx context.Context, articles []*models.Article) ([]*models.Article, error)
+	Enumerate(ctx context.Context, articles models.ArticleArray, offset, limit int) (models.ArticleArray, error)
 	Retrieve(ctx context.Context, article *models.Article) (*models.Article, error)
 }
 
