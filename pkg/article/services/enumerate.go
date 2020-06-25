@@ -27,11 +27,7 @@ func (s *services) Enumerate(ctx context.Context, articles models.ArticleArray, 
 	if limit == 0 {
 		limit = 20
 	}
-	rows, err := db.Limit(limit).Offset(offset).Order("published_at desc").Rows()
-	if err != nil {
-		return
-	}
-	err = s.Store.Database.ScanRows(rows, output)
+	err = db.Limit(limit).Offset(offset).Order("published_at desc").Scan(output).Error
 	if err != nil {
 		output = nil
 		return

@@ -2,9 +2,23 @@ package models
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
 
 	"github.com/pronuu/lincoln/internal/utils"
 )
+
+// VoteArray ...
+type VoteArray []*Vote
+
+// String ...
+func (voteArray *VoteArray) String() string {
+	voteIDs := make([]string, 0)
+	for _, vote := range *voteArray {
+		voteIDs = append(voteIDs, fmt.Sprintf("Vote{ID: %s}", strconv.Itoa(int(vote.ID))))
+	}
+	return fmt.Sprintf("[]Vote{%s}", strings.Join(voteIDs, ","))
+}
 
 // Vote is a representation of a vote in the database
 type Vote struct {
