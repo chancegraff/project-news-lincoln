@@ -9,8 +9,8 @@ import (
 	"github.com/pronuu/lincoln/pkg/vote/services"
 )
 
-// NewArticleService ...
-func NewArticleService(str *database.Store, lgr log.Logger) routes.Routes {
+// NewVoteService ...
+func NewVoteService(str *database.Store, lgr log.Logger) routes.Routes {
 	mdl := middlewares.NewMiddleware(lgr)
 	svc := services.NewServices(str)
 	svc = mdl.BindServices(svc)
