@@ -10,4 +10,5 @@ require (
 	github.com/joho/godotenv v1.3.0
 	github.com/soheilhy/cmux v0.1.4
 	golang.org/x/net v0.0.0-20200602114024-627f9648deb9 // indirect
+	google.golang.org/grpc v1.30.0 // indirect
 )

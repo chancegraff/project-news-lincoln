@@ -3,8 +3,6 @@ package main
 import (
 	"context"
 
-	// "github.com/soheilhy/cmux" // Will run Article and Vote services on HTTP and GRPC ports using cmux
-
 	"github.com/gorilla/mux"
 	"github.com/pronuu/lincoln/internal/config"
 	"github.com/pronuu/lincoln/internal/database"
